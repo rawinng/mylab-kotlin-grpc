@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "rawin.hellogrpc";
+option java_package = "rawinng.hellogrpc.proto";
 option java_outer_classname = "HelloWorldProto";
 
 package hellogrpc;

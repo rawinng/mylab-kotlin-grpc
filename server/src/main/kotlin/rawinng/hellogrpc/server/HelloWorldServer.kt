@@ -2,7 +2,9 @@ package rawinng.hellogrpc.server
 
 import io.grpc.Server
 import io.grpc.ServerBuilder
-import rawin.hellogrpc.*
+import rawinng.hellogrpc.proto.GreeterGrpcKt
+import rawinng.hellogrpc.proto.HelloRequest
+import rawinng.hellogrpc.proto.helloReply
 
 class HelloWorldServer(private val port: Int) {
     private val server: Server = ServerBuilder.forPort(port)

@@ -25,6 +25,7 @@ dependencies {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
     kotlinOptions {
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
+        jvmTarget = "17"
     }
 }
 

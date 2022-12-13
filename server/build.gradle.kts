@@ -24,8 +24,14 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17"
 }
 
+tasks.register<JavaExec>("HelloWorldServer") {
+    dependsOn("classes")
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("rawinng.hellogrpc.server.HelloWorldServerKt")
+}
+
 val helloWorldServerStartScripts = tasks.register<CreateStartScripts>("helloWorldServerStartScripts") {
-    mainClass.set("rawinng.hellogrpc.HelloWorldServerKt")
+    mainClass.set("rawinng.hellogrpc.server.HelloWorldServerKt")
     applicationName = "hello-world-server"
     outputDir = tasks.named<CreateStartScripts>("startScripts").get().outputDir
     classpath = tasks.named<CreateStartScripts>("startScripts").get().classpath

@@ -1,20 +1,35 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.20"
-    id("com.google.protobuf") version "0.8.18" apply false
+    application
+    kotlin("jvm")
 }
 
 group = "rawinng"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-    google()
+dependencies {
+    implementation(project(":stub"))
+    runtimeOnly("io.grpc:grpc-netty:${rootProject.ext["grpcVersion"]}")
+
+    testImplementation(kotlin("test"))
 }
 
-dependencies {
-    testImplementation(kotlin("test"))
+tasks.register<JavaExec>("HelloWorldClient") {
+    dependsOn("classes")
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("rawinng.hellogrpc.client.HelloWorldClientKt")
+}
+
+val helloWorldClientStartScripts = tasks.register<CreateStartScripts>("helloWorldClientStartScripts") {
+    mainClass.set("io.grpc.examples.helloworld.HelloWorldClientKt")
+    applicationName = "hello-world-client"
+    outputDir = tasks.named<CreateStartScripts>("startScripts").get().outputDir
+    classpath = tasks.named<CreateStartScripts>("startScripts").get().classpath
+}
+
+tasks.named("startScripts") {
+    dependsOn(helloWorldClientStartScripts)
 }
 
 tasks.test {
